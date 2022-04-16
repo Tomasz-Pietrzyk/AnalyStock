@@ -17,4 +17,4 @@ jobs:
         with:
           ref: ${{ github.sha }}
 
-      - run: ll
+      - run: ls
