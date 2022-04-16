@@ -1,0 +1,17 @@
+name: Pull request to Master (close)
+
+on:
+  pull_request_target:
+    branches:
+      - master
+    
+    types:
+      - closed
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo close
+      - run: echo ${{ github.event }}
