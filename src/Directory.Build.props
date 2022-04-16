@@ -1,0 +1,41 @@
+<Project>
+    <PropertyGroup>
+        <Authors>Tomasz Pietrzyk</Authors>
+        <Company>BanishedDev</Company>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFrameworks>net6.0</TargetFrameworks>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <TargetFramework Condition=" '$(TargetFramework)' == '' ">net6.0</TargetFramework>
+        <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateFullPaths>true</GenerateFullPaths>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <!-- Output Directories Configuration -->
+    <PropertyGroup>
+        <BuildPath>../../build</BuildPath>
+        <BaseOutputPath>$(BuildPath)/$(MSBuildProjectName)</BaseOutputPath>
+        <BaseIntermediateOutputPath>$(BaseOutputPath)/obj</BaseIntermediateOutputPath>
+        <OutputPath>$(BaseOutputPath)/$(TargetFramework)/$(Configuration)</OutputPath>
+        <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+        <PackageOutputPath>$(BuildPath)/release</PackageOutputPath>
+        <RunSettingsFilePath>$(MSBuildProjectDirectory)\analystock.runsettings</RunSettingsFilePath>
+    </PropertyGroup>
+
+   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+       <DefineConstants>DEBUG</DefineConstants>
+   </PropertyGroup>
+    <!-- Release Configuration -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <DefineConstants>RELEASE</DefineConstants>
+    </PropertyGroup>
+</Project>

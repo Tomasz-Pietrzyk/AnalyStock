@@ -1,0 +1,106 @@
+name: Release
+
+on: 
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      share:
+        required: false
+        default: false
+        type: boolean
+
+    secrets:
+      assembly_sign_key:
+        required: true
+
+env:
+  workflow_cache_key: ${{ github.run_id }}/cache/release 
+  workflow_path: |
+    build
+    tmp
+  
+  
+jobs:
+  restore: 
+    name: Restore
+    environment: build/release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-restore
+
+      - run: dotnet restore src/AnalyStock.sln
+  
+  build:
+    needs: restore
+    name: Build
+    environment: build/release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-build
+          restore-keys: ${{ env.workflow_cache_key }}-restore
+
+      
+      - run: echo -n '${{ secrets.assembly_sign_key }}' | base64 --decode > src/AnalyStock/analystock.snk
+      - run: dotnet build -c Release --no-restore src/AnalyStock.sln
+
+  test:
+    needs: build
+    name: Test
+    environment: test/release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-test
+          restore-keys: ${{ env.workflow_cache_key }}-build
+      
+      - run: dotnet test -c Release --no-build src/AnalyStock.sln
+
+  share-build:
+    if: ${{ inputs.share }}
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-build
+          restore-keys: ${{ env.workflow_cache_key }}-build
+
+      - uses: actions/upload-artifact@v3  
+        with:
+          name: ${{ github.run_id }}-build-release
+          path: build # or path/to/artifact
+
+  share-test:
+    if: ${{ inputs.share }}
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-test
+          restore-keys: ${{ env.workflow_cache_key }}-test
+
+      - uses: actions/upload-artifact@v3  
+        with:
+          name: ${{ github.run_id }}-test_results-release
+          path: build/TestsResults # or path/to/artifact

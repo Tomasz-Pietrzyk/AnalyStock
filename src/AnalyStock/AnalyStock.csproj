@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>BanishedDev.AnalyStock</PackageId>
+    <VersionPrefix>0.1.0</VersionPrefix>
+   <VersionSuffix>develop</VersionSuffix>
+ <PackageDescription>Financial</PackageDescription>
+    <SignAssembly>true</SignAssembly>
+  
+  </PropertyGroup>
+
+  <PropertyGroup>
+   
+    <OutputType>Library</OutputType>
+
+    
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+</Project>
