@@ -13,5 +13,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo close
-      - run: echo ${{ github.event }}
+      - run: echo ${{ github.event.action }}
+      - run: echo ${{ github.event.pull_request.merged }}
