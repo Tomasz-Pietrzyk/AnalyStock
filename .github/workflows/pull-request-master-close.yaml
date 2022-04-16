@@ -1,0 +1,38 @@
+name: Pull request to Master (close)
+
+on:
+  pull_request_target:
+    branches:
+      - master
+    
+    types:
+      - closed
+
+jobs:
+  build-release:
+    if: ${{ github.event.pull_request.merged }}
+    uses: Tomasz-Pietrzyk/AnalyStock/.github/workflows/release.yaml@master
+    with:
+      share: true
+    secrets:
+      assembly_sign_key: ${{ secrets.assembly_sign_key }}
+
+  code-coverage:
+    needs: build-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.run_id }}-test_results-release
+    
+    
+
+      - run: cp xUnit/**/coverage.info ./
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} 
+          path-to-lcov: coverage.info
