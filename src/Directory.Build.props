@@ -25,8 +25,7 @@
         <BaseIntermediateOutputPath>$(BaseOutputPath)/obj</BaseIntermediateOutputPath>
         <OutputPath>$(BaseOutputPath)/$(TargetFramework)/$(Configuration)</OutputPath>
         <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-        <PublishDir>../../publish/$(MSBuildProjectName)</PublishDir>
-        <PackageOutputPath>../../publish/packages</PackageOutputPath>
+        <PackageOutputPath>../../publish</PackageOutputPath>
         <RunSettingsFilePath>$(MSBuildProjectDirectory)\analystock.runsettings</RunSettingsFilePath>
     </PropertyGroup>
 

@@ -15,5 +15,7 @@ jobs:
 
       - run: dotnet build -c Release --version-suffix 'dev.${{ github.run_number }}' src/AnalyStock.sln
       - run: dotnet pack -c Release --version-suffix 'dev.${{ github.run_number }}' src/AnalyStock.sln
-      - run: echo ${{ github.run_id }}
-      - run: echo ${{ github.run_number }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: publish-packages
+          path: publish
