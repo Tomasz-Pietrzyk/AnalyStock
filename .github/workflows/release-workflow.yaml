@@ -1,20 +1,65 @@
-name: Debug End
+name: AnalyStock Release
 
 on: 
-  push:
+  workflow_dispatch:
+  workflow_call:
+  pull_request:
     branches:
       - master
    
 
+env:
+  workflow_cache_key: ${{ github.run_id }}/cache/release
+  workflow_path: |
+    build
+    src
+    tmp
 
 jobs:
   restore: 
     name: Restore
+    environment: build/release
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - run: ls
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-restore
 
-  dwa:
-    uses: Tomasz-Pietrzyk/AnalyStock/.github/workflows/debug-workflow.yaml@master
+      - run: dotnet restore src/AnalyStock.sln
+  
+  build:
+    needs: restore
+    name: Build
+    environment: build/release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-build
+          restore-keys: ${{ env.workflow_cache_key }}-restore
+
+      
+      - run: echo -n '${{ secrets.assembly_sign_key }}' | base64 --decode > src/AnalyStock/analystock.snk
+      - run: dotnet build -c Release --no-restore src/AnalyStock.sln
+
+  test:
+    needs: build
+    name: Test
+    environment: test/release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-test
+          restore-keys: ${{ env.workflow_cache_key }}-build
+      
+      - run: dotnet test -c Release --no-build src/AnalyStock.sln
+
+
