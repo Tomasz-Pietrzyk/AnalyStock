@@ -2,6 +2,6 @@ using System.Reflection;
 
 #if RELEASE
 
-[assembly:AssemblyKeyFileAttribute("analystock.snk")]
+//[assembly:AssemblyKeyFileAttribute("analystock.snk")]
 
 #endif
