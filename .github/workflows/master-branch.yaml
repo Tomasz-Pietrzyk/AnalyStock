@@ -29,3 +29,11 @@ jobs:
           path: ${{ env.workflow_path }}
           key: ${{ env.workflow_cache_key }}-test
           restore-keys: ${{ env.workflow_cache_key }}-test
+
+      - run: cp build/TestsResults/xUnit/**/coverage.info ./
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage.info
