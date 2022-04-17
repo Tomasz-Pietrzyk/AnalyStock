@@ -2,6 +2,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/Tomasz-Pietrzyk/AnalyStock/badge.svg?branch=master)](https://coveralls.io/github/Tomasz-Pietrzyk/AnalyStock?branch=master)
 [![Debug](https://github.com/Tomasz-Pietrzyk/AnalyStock/actions/workflows/debug-workflow.yaml/badge.svg)](https://github.com/Tomasz-Pietrzyk/AnalyStock/actions/workflows/debug-workflow.yaml)
+[![AnalyStock Debug](https://github.com/Tomasz-Pietrzyk/AnalyStock/actions/workflows/debug-workflow.yaml/badge.svg?branch=master&event=push)](https://github.com/Tomasz-Pietrzyk/AnalyStock/actions/workflows/debug-workflow.yaml)
+[![AnalyStock Debug](https://github.com/Tomasz-Pietrzyk/AnalyStock/actions/workflows/debug-workflow.yaml/badge.svg?branch=master&event=pull_request)](https://github.com/Tomasz-Pietrzyk/AnalyStock/actions/workflows/debug-workflow.yaml)
 
 t
 ##### [MIT License](https://github.com/Tomasz-Pietrzyk/AnalyStock/blob/master/LICENSE)
