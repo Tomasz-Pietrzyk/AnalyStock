@@ -70,6 +70,7 @@ jobs:
 
   publish-package:
     needs: pack
+    environment: publish/release
     runs-on: ubuntu-latest
 
     steps:
@@ -80,4 +81,4 @@ jobs:
           restore-keys: ${{ env.workflow_cache_key }}-package
 
       - run: dotnet nuget add source --username Tomasz-Pietrzyk --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Tomasz-Pietrzyk/index.json"
-      - run: dotnet nuget push --api-key YOUR_GITHUB_PAT --source "github" publish/packages/*.nupkg
+      - run: dotnet nuget push --api-key ${{ secrets.NUGET_PAT }} --source "github" publish/packages/BanishedDev.AnalyStock.0.1.0-develop.nupkg
