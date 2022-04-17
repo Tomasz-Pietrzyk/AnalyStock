@@ -1,77 +1,15 @@
-name: Master branch
+name: Master branch 0.1.0
 
 on: 
   push:
     branches:
       - master
    
-env:
-  workflow_cache_key: ${{ github.run_id }}/cache/release
-  workflow_path: |
-    build
-    src
-    tmp
-    
+
 jobs:
   release:
-    uses: Tomasz-Pietrzyk/AnalyStock/.github/workflows/release-workflow.yaml@master
-    secrets:
-      assembly_sign_key: ${{ secrets.assembly_sign_key }}
-
-  codecoverage:
-    needs: release
     runs-on: ubuntu-latest
 
-
     steps:
-      - uses: actions/cache@v2
-        with:
-          path: ${{ env.workflow_path }}
-          key: ${{ env.workflow_cache_key }}-test
-          restore-keys: ${{ env.workflow_cache_key }}-test
-
-      - run: cp build/TestsResults/xUnit/**/coverage.info ./
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage.info
-
-  publish:
-    needs: release
-    environment: publish/release
-    runs-on: ubuntu-latest
-
-
-    steps:
-      - uses: actions/cache@v2
-        with:
-          path: ${{ env.workflow_path }}
-          key: ${{ env.workflow_cache_key }}-publish
-          restore-keys: ${{ env.workflow_cache_key }}-build
-
-      - run: dotnet publish --no-build -c Release src/AnalyStock/AnalyStock.csproj
-
-  pack:
-    needs: release
-    environment: publish/release
-    runs-on: ubuntu-latest
-
-
-    steps:
-      - uses: actions/cache@v2
-        with:
-          path: ${{ env.workflow_path }}
-          key: ${{ env.workflow_cache_key }}-package
-          restore-keys: ${{ env.workflow_cache_key }}-build
-
-      - run: dotnet pack --no-build -c Release src/AnalyStock/AnalyStock.csproj
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: analystock-packages
-          path: publish/packages # or path/to/artifact
-
-      - run: dotnet nuget add source --username Tomasz-Pietrzyk --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Tomasz-Pietrzyk/index.json"
-      - run: dotnet nuget push --api-key ${{ secrets.NUGET_PAT }} --source "github" publish/packages/BanishedDev.AnalyStock.0.1.0-develop.nupkg
+      - run: echo ${{ github.run_id }}
+      - run: echo ${{ github.run_number }}
