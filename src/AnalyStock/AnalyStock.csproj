@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageId>BanishedDev.AnalyStock</PackageId>
     <VersionPrefix>0.1.0</VersionPrefix>
-   <VersionSuffix>develop</VersionSuffix>
+ 
  <PackageDescription>Financial</PackageDescription>
 <RepositoryType>git</RepositoryType>
 <RepositoryUrl>https://github.com/Tomasz-Pietrzyk/AnalyStock.git</RepositoryUrl>
