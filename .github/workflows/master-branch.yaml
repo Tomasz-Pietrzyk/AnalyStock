@@ -19,6 +19,7 @@ jobs:
       assembly_sign_key: ${{ secrets.assembly_sign_key }}
 
   codecoverage:
+    needs: release
     runs-on: ubuntu-latest
 
 
