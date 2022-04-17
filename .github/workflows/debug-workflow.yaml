@@ -1,4 +1,4 @@
-name: Debug
+name: AnalyStock Debug
 
 on: 
   pull_request:
