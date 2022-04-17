@@ -3,9 +3,9 @@ name: AnalyStock Release
 on: 
   workflow_dispatch:
   workflow_call:
-  pull_request:
-    branches:
-      - master
+    secrets:
+      assembly_sign_key:
+        required: true
    
 
 env:

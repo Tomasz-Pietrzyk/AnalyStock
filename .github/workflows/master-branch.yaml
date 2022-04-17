@@ -1,0 +1,12 @@
+name: Master branch
+
+on: 
+  push:
+    branches:
+      - master
+   
+jobs:
+  release:
+    uses: Tomasz-Pietrzyk/AnalyStock/.github/workflows/release-workflow.yaml@master
+    secrets:
+      assembly_sign_key: ${{ secrets.assembly_sign_key }}
