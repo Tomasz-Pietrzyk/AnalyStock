@@ -4,6 +4,7 @@
     <VersionPrefix>0.1.0</VersionPrefix>
    <VersionSuffix>develop</VersionSuffix>
  <PackageDescription>Financial</PackageDescription>
+ 
     <SignAssembly>true</SignAssembly>
   
   </PropertyGroup>
@@ -16,5 +17,9 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
 
 </Project>
