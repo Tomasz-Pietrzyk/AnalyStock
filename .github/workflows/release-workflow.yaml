@@ -1,7 +1,9 @@
-name: Release
+name: Debug End
 
 on: 
   pull_request:
+    types:
+      - closed
     branches:
       - master
    
@@ -13,4 +15,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ${{ github.sha }}
+      - uses: actions/checkout@v3
+      - run: ls
