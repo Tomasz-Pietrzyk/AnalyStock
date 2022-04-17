@@ -1,6 +1,7 @@
 name: AnalyStock Debug
 
 on: 
+  workflow_dispatch:
   pull_request:
     branches:
       - master
