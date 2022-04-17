@@ -67,5 +67,11 @@ jobs:
           restore-keys: ${{ env.workflow_cache_key }}-build
 
       - run: dotnet pack --no-build -c Release src/AnalyStock/AnalyStock.csproj
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: analystock-packages
+          path: publish/packages # or path/to/artifact
+
       - run: dotnet nuget add source --username Tomasz-Pietrzyk --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Tomasz-Pietrzyk/index.json"
       - run: dotnet nuget push --api-key ${{ secrets.NUGET_PAT }} --source "github" publish/packages/BanishedDev.AnalyStock.0.1.0-develop.nupkg
