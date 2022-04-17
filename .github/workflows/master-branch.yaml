@@ -52,3 +52,18 @@ jobs:
           restore-keys: ${{ env.workflow_cache_key }}-build
 
       - run: dotnet publish --no-build -c Release src/AnalyStock/AnalyStock.csproj
+
+  pack:
+    needs: publish
+    environment: publish/release
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.workflow_path }}
+          key: ${{ env.workflow_cache_key }}-publish
+          restore-keys: ${{ env.workflow_cache_key }}-build
+
+      - run: dotnet pack --no-build -c Release src/AnalyStock/AnalyStock.csproj
